@@ -23,7 +23,7 @@ function! s:make_reverse_table(escape_table)
     let h = {}
     for [k, v] in items(a:escape_table)
         " Assumption: `v` does not contain regex.
-        let h["&" . v . ";"] = s:escape_regex(k)
+        let h["\\&" . v . ";"] = s:escape_regex(k)
     endfor
     return h
 endfunction
