@@ -13,15 +13,38 @@ set cpo&vim
 " }}}
 
 
+function! s:convert_entities(escape_table)
+    return map(copy(a:escape_table), '"\\&" . v:val . ";"')
+endfunction
+function! s:escape_regex(regex)
+    return substitute(a:regex, '[&]', '\="\\" . submatch(0)', 'g')
+endfunction
+function! s:make_reverse_table(escape_table)
+    let h = {}
+    for [k, v] in items(a:escape_table)
+        " Assumption: `v` does not contain regex.
+        let h["&" . v . ";"] = s:escape_regex(k)
+    endfor
+    return h
+endfunction
+
+
+
 let s:escape_table = {
-\   '&': '\&amp;',
-\   '<': '\&lt;',
-\   '>': '\&gt;',
+\   '&': 'amp',
+\   '<': 'lt',
+\   '>': 'gt',
 \}
+
 if !exists('g:operator_html_escape_escape_table')
-    let g:operator_html_escape_escape_table = s:escape_table
+    let g:operator_html_escape_escape_table =
+    \   s:convert_entities(s:escape_table)
 else
-    call extend(g:operator_html_escape_escape_table, s:escape_table, 'keep')
+    call extend(
+    \   g:operator_html_escape_escape_table,
+    \   s:convert_entities(s:escape_table),
+    \   'keep'
+    \)
 endif
 
 if !exists('g:operator_html_escape_escape_default_flags')
@@ -29,15 +52,15 @@ if !exists('g:operator_html_escape_escape_default_flags')
 endif
 
 
-let s:unescape_table = {
-\   '&amp;': '\&',
-\   '&lt;': '<',
-\   '&gt;': '>',
-\}
 if !exists('g:operator_html_escape_unescape_table')
-    let g:operator_html_escape_unescape_table = s:unescape_table
+    let g:operator_html_escape_unescape_table =
+    \   s:make_reverse_table(s:escape_table)
 else
-    call extend(g:operator_html_escape_unescape_table, s:unescape_table, 'keep')
+    call extend(
+    \   g:operator_html_escape_unescape_table,
+    \   s:make_reverse_table(s:escape_table),
+    \   'keep'
+    \)
 endif
 
 if !exists('g:operator_html_escape_unescape_default_flags')
