@@ -20,8 +20,7 @@ Changelog			|operator-html-escape-changelog|
 ==============================================================================
 INTRODUCTION						*operator-html-escape-introduction* {{{
 
-|operator-html-escape| provides |operator|
-to escape HTML entities.
+|operator-html-escape| provides |operator| to escape HTML entities.
 >
 	nmap <c-h> <Plug>(operator-html-escape)
 	nmap <c-u> <Plug>(operator-html-unescape)
@@ -33,6 +32,10 @@ But the fact is that it is certainly NOT the same
 because this is operator.
 so this can work with |text-objects|.
 You can also enhance |text-objects| by |textobj-user|.
+
+Requirements:
+- Vim 7.2 or later
+- |operator-user| 0.0.5 or later (vimscript#2692)
 
 }}}
 ==============================================================================
