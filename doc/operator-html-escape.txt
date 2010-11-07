@@ -76,6 +76,8 @@ g:operator_html_escape_escape_default_flags		*g:operator_html_escape_escape_defa
 	This is used If "flags" key does not exist
 	in |g:operator_html_escape_escape_table|.
 
+	Note: "e" is automatically added due to implementation.
+
 g:operator_html_escape_unescape_table		*g:operator_html_escape_unescape_table*
 									(Default: too long)
 	Dictionary.
@@ -101,6 +103,8 @@ g:operator_html_escape_unescape_default_flags		*g:operator_html_escape_unescape_
 	This is used If "flags" key does not exist
 	in |g:operator_html_escape_unescape_table|.
 
+	Note: "e" is automatically added due to implementation.
+
 
 
 
@@ -118,10 +122,10 @@ But you will get an error.
 Because values are used like this: >
 	s/{from}/{to}/{flags}
 Above example is converted like this: >
-	s/[slash]///
+	s/[slash]///e
 and get this error "E488: Trailing characters".
 What you exactly expected is: >
-	s/[slash]/\//
+	s/[slash]/\//e
 
 So you must escape "/", like this: >
 	let g:operator_html_escape_escape_table = {'[slash]': '\/'}

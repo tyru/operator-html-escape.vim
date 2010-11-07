@@ -20,6 +20,7 @@ function! operator#html_escape#escape(__unused__) "{{{
             continue    " invalid value, skip.
         endif
 
+        let flags .= 'e'    " for avoiding errors.
         silent execute "'[,']" 's/' . from . '/' . to . '/' . flags
     endfor
 endfunction "}}}
@@ -35,6 +36,7 @@ function! operator#html_escape#unescape(__unused__) "{{{
             continue    " invalid value, skip.
         endif
 
+        let flags .= 'e'    " for avoiding errors.
         silent execute "'[,']" 's/' . from . '/' . to . '/' . flags
     endfor
 endfunction "}}}
