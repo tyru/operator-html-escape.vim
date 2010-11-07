@@ -1,0 +1,137 @@
+*operator-html-escape.txt* *operator-html-escape*
+
+Author:
+  tyru <tyru.exe@gmail.com>
+Version: 0.0.0
+License: Under the same license as Vim itself (see :help license)
+
+==============================================================================
+CONTENTS						*operator-html-escape-contents*
+
+Introduction		|operator-html-escape-introduction|
+Interface			|operator-html-escape-interface|
+  Keymappings		|operator-html-escape-keymappings|
+  Variables			|operator-html-escape-variables|
+Escaping slashes in escape/unescape table
+					|operator-html-escape-escaping-slashes-in-tables|
+Changelog			|operator-html-escape-changelog|
+
+
+==============================================================================
+INTRODUCTION						*operator-html-escape-introduction* {{{
+
+|operator-html-escape| provides |operator|
+to escape HTML entities.
+>
+	nmap <c-h> <Plug>(operator-html-escape)
+	nmap <c-u> <Plug>(operator-html-unescape)
+
+This has similar feature with this wiki page:
+	http://vim.wikia.com/wiki/HTML_entities
+
+But the fact is that it is certainly NOT the same
+because this is operator.
+so this can work with |text-objects|.
+You can also enhance |text-objects| by |textobj-user|.
+
+}}}
+==============================================================================
+INTERFACE				*operator-html-escape-interface* {{{
+------------------------------------------------------------------------------
+KEYMAPPINGS					*operator-html-escape-keymappings* {{{
+
+<Plug>(operator-html-escape)		*<Plug>(operator-html-escape)*
+	Escape given range.
+
+<Plug>(operator-html-unescape)		*<Plug>(operator-html-unescape)*
+	Unescape given range.
+
+}}}
+------------------------------------------------------------------------------
+VARIABLES					*operator-html-escape-variables* {{{
+
+g:operator_html_escape_escape_table		*g:operator_html_escape_escape_table*
+									(Default: too long. see
+									plugin/operator/html_escape.vim)
+	Dictionary.
+	Default value is: >
+		let g:operator_html_escape_escape_table = {
+		\   '&': '\&amp;',
+		\   '<': '\&lt;',
+		\   '>': '\&gt;',
+		\}
+<
+	You can also supply [flags] of |:substitute| as "flags" key: >
+		let g:operator_html_escape_escape_table = {
+		\   '&': {'to': '\&amp;', 'flags': 'g'},
+		\}
+<
+	See |operator-html-escape-escaping-slashes-in-tables|
+	for including slashes in pattern.
+
+g:operator_html_escape_escape_default_flags		*g:operator_html_escape_escape_default_flags*
+									(Default: "g")
+	String.
+	Default [flags] of |:substitute|.
+	This is used If "flags" key does not exist
+	in |g:operator_html_escape_escape_table|.
+
+g:operator_html_escape_unescape_table		*g:operator_html_escape_unescape_table*
+									(Default: too long)
+	Dictionary.
+	Default value is: >
+		let g:operator_html_escape_unescape_table = {
+		\   '&amp;': '\&',
+		\   '&lt;': '<',
+		\   '&gt;': '>',
+		\}
+<
+	You can also supply [flags] of |:substitute| as "flags" key: >
+		let g:operator_html_escape_unescape_table = {
+		\   '&amp;': {'to': '&', 'flags': 'g'},
+		\}
+<
+	See |operator-html-escape-escaping-slashes-in-tables|
+	for including slashes in pattern.
+
+g:operator_html_escape_unescape_default_flags		*g:operator_html_escape_unescape_default_flags*
+									(Default: "g")
+	String.
+	Default [flags] of |:substitute|.
+	This is used If "flags" key does not exist
+	in |g:operator_html_escape_unescape_table|.
+
+
+
+
+
+
+}}}
+}}}
+==============================================================================
+Escaping slashes in escape/unescape table {{{
+*operator-html-escape-escaping-slashes-in-tables*
+You MUST escape "/" in those tables. for e.g.: >
+	let g:operator_html_escape_escape_table = {'[slash]': '/'}
+But you will get an error.
+
+Because values are used like this: >
+	s/{from}/{to}/{flags}
+Above example is converted like this: >
+	s/[slash]///
+and get this error "E488: Trailing characters".
+What you exactly expected is: >
+	s/[slash]/\//
+
+So you must escape "/", like this: >
+	let g:operator_html_escape_escape_table = {'[slash]': '\/'}
+}}}
+==============================================================================
+CHANGELOG						*operator-html-escape-changelog* {{{
+
+0.0.0:
+- Initial upload
+
+}}}
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=4:ft=help:norl:noet:fdm=marker:fen
