@@ -2,7 +2,7 @@
 
 Author:
   tyru <tyru.exe@gmail.com>
-Version: 0.0.0
+Version: 0.0.1
 License: Under the same license as Vim itself (see :help license)
 
 ==============================================================================
@@ -138,6 +138,9 @@ CHANGELOG						*operator-html-escape-changelog* {{{
 
 0.0.0:
 - Initial upload
+0.0.1:
+- fix bug: operators works in only linewise.
+  support characterwise and blockwise.
 
 }}}
 ==============================================================================
