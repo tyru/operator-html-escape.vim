@@ -43,7 +43,6 @@ function! s:substitute(text, default_flags, table) "{{{
             continue    " invalid value, skip.
         endif
 
-        let flags .= 'e'    " for avoiding errors.
         let text = substitute(text, from, to, flags)
     endfor
     return text
