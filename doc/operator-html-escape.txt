@@ -11,9 +11,6 @@ CONTENTS						*operator-html-escape-contents*
 Introduction		|operator-html-escape-introduction|
 Interface			|operator-html-escape-interface|
   Keymappings		|operator-html-escape-keymappings|
-  Variables			|operator-html-escape-variables|
-Escaping slashes in escape/unescape table
-					|operator-html-escape-escaping-slashes-in-tables|
 Changelog			|operator-html-escape-changelog|
 
 
@@ -50,88 +47,6 @@ KEYMAPPINGS					*operator-html-escape-keymappings* {{{
 	Unescape given range.
 
 }}}
-------------------------------------------------------------------------------
-VARIABLES					*operator-html-escape-variables* {{{
-
-g:operator_html_escape_escape_table		*g:operator_html_escape_escape_table*
-									(Default: too long. see
-									plugin/operator/html_escape.vim)
-	Dictionary.
-	Default value is: >
-		let g:operator_html_escape_escape_table = {
-		\   '&': '\&amp;',
-		\   '<': '\&lt;',
-		\   '>': '\&gt;',
-		\}
-<
-	You can also supply [flags] of |:substitute| as "flags" key: >
-		let g:operator_html_escape_escape_table = {
-		\   '&': {'to': '\&amp;', 'flags': 'g'},
-		\}
-<
-	See |operator-html-escape-escaping-slashes-in-tables|
-	for including slashes in pattern.
-
-g:operator_html_escape_escape_default_flags		*g:operator_html_escape_escape_default_flags*
-									(Default: "g")
-	String.
-	Default [flags] of |:substitute|.
-	This is used If "flags" key does not exist
-	in |g:operator_html_escape_escape_table|.
-
-	Note: "e" is automatically added due to implementation.
-
-g:operator_html_escape_unescape_table		*g:operator_html_escape_unescape_table*
-									(Default: too long)
-	Dictionary.
-	Default value is: >
-		let g:operator_html_escape_unescape_table = {
-		\   '&amp;': '\&',
-		\   '&lt;': '<',
-		\   '&gt;': '>',
-		\}
-<
-	You can also supply [flags] of |:substitute| as "flags" key: >
-		let g:operator_html_escape_unescape_table = {
-		\   '&amp;': {'to': '&', 'flags': 'g'},
-		\}
-<
-	See |operator-html-escape-escaping-slashes-in-tables|
-	for including slashes in pattern.
-
-g:operator_html_escape_unescape_default_flags		*g:operator_html_escape_unescape_default_flags*
-									(Default: "g")
-	String.
-	Default [flags] of |:substitute|.
-	This is used If "flags" key does not exist
-	in |g:operator_html_escape_unescape_table|.
-
-	Note: "e" is automatically added due to implementation.
-
-
-
-
-
-
-}}}
-}}}
-==============================================================================
-Escaping slashes in escape/unescape table {{{
-*operator-html-escape-escaping-slashes-in-tables*
-You MUST escape "/" in those tables. for e.g.: >
-	let g:operator_html_escape_escape_table = {'[slash]': '/'}
-But you will get an error.
-
-Because values are used like this: >
-	s/{from}/{to}/{flags}
-Above example is converted like this: >
-	s/[slash]///e
-and get this error "E488: Trailing characters".
-What you exactly expected is: >
-	s/[slash]/\//e
-
-So you must escape "/", like this: >
-	let g:operator_html_escape_escape_table = {'[slash]': '\/'}
 }}}
 ==============================================================================
 CHANGELOG						*operator-html-escape-changelog* {{{
