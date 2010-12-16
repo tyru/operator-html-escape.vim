@@ -17,7 +17,7 @@ function! s:convert_entities(escape_table)
     return map(copy(a:escape_table), '"\\&" . v:val . ";"')
 endfunction
 function! s:escape_regex(regex)
-    return substitute(a:regex, '[&]', '\="\\" . submatch(0)', 'g')
+    return escape(a:regex, '&')
 endfunction
 function! s:make_reverse_table(escape_table)
     let h = {}
