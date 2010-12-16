@@ -35,8 +35,8 @@ let s:escape_table = {
 \   '&': 'amp',
 \   '<': 'lt',
 \   '>': 'gt',
-\   'quot': '"',
-\   'apos': "'",
+\   '"': 'quot',
+\   "'": "apos",
 \
 \   nr2char(198): "AElig",
 \   nr2char(193): "Aacute",
