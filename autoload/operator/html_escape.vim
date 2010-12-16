@@ -30,7 +30,6 @@ endfunction "}}}
 
 " From perl module HTML::Entities.
 let s:char_vs_entity = {
-\   '&': 'amp',
 \   '<': 'lt',
 \   '>': 'gt',
 \   '"': 'quot',
@@ -297,20 +296,20 @@ function! operator#html_escape#escape(motion_wiseness) "{{{
     call s:replace_range('s:do_escape', a:motion_wiseness)
 endfunction "}}}
 function! s:do_escape(text) "{{{
-    return s:substitute(
-    \   a:text,
-    \   s:escape_table
-    \)
+    let text = a:text
+    let text = substitute(text, '&', '\&amp;', 'g')
+    let text = s:substitute(text, s:escape_table)
+    return text
 endfunction "}}}
 
 function! operator#html_escape#unescape(motion_wiseness) "{{{
     call s:replace_range('s:do_unescape', a:motion_wiseness)
 endfunction "}}}
 function! s:do_unescape(text) "{{{
-    return s:substitute(
-    \   a:text,
-    \   s:unescape_table
-    \)
+    let text = a:text
+    let text = substitute(text, '&amp;', '\&', 'g')
+    let text = s:substitute(text, s:unescape_table)
+    return text
 endfunction "}}}
 
 
