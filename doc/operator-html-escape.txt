@@ -1,4 +1,4 @@
-*operator-html-escape.txt* *operator-html-escape*
+*operator-html-escape.txt*
 
 Author:
   tyru <tyru.exe@gmail.com>
